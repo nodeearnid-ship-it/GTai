@@ -1,0 +1,28 @@
+name: Geron Auto Signal
+
+on:
+  schedule:
+    # Berjalan setiap 15 menit
+    - cron: '*/15 * * * *'
+  workflow_dispatch: # Tombol buat tes manual
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Execute Script
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+        run: node index.js
