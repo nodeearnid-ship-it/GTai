@@ -1,14 +1,20 @@
 const axios = require('axios');
 
-// Ambil data dari Environment Variables (GitHub Secrets)
 const TOKEN = process.env.BOT_TOKEN;
 const CHANNEL_ID = process.env.CHANNEL_ID;
 
 async function sendSignal() {
-  // Daftar aset untuk variasi sinyal
-  const assets = ['BITCOIN OTC', 'GOLD OTC', 'ETH OTC', 'CRYPTO IDX', 'EUR/USD', 'USD/JPY'];
+  // Daftar aset yang lu minta (Market yang lagi rame)
+  const assets = [
+    'ASIA COMPOSITE INDEX', 
+    'BITCOIN OTC', 
+    'COMPOUND INDEX', 
+    'GOLD OTC'
+  ];
+  
   const directions = ['🟢 BUY / CALL', '🔴 SELL / PUT'];
   
+  // Ambil aset secara acak dari list di atas
   const randomAsset = assets[Math.floor(Math.random() * assets.length)];
   const randomDir = directions[Math.floor(Math.random() * directions.length)];
 
@@ -23,23 +29,15 @@ async function sendSignal() {
 
   try {
     const url = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
-    const response = await axios.post(url, {
+    await axios.post(url, {
       chat_id: CHANNEL_ID,
       text: message,
       parse_mode: 'Markdown'
     });
-
-    if (response.data.ok) {
-      console.log('✅ Sinyal Berhasil Terkirim!');
-    }
+    console.log('✅ Sinyal ' + randomAsset + ' Berhasil Terkirim!');
   } catch (error) {
-    console.error('❌ Detail Error:');
-    if (error.response) {
-      console.error(JSON.stringify(error.response.data, null, 2));
-    } else {
-      console.error(error.message);
-    }
-    process.exit(1); // Paksa GitHub lapor "Fail" kalau gagal kirim
+    console.error('❌ Error:', error.response ? error.response.data : error.message);
+    process.exit(1);
   }
 }
 
