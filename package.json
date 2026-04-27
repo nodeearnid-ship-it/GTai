@@ -1,0 +1,9 @@
+{
+  "name": "geron-signal-bot",
+  "version": "1.0.0",
+  "description": "Bot Sinyal Otomatis Geron",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}
