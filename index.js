@@ -4,7 +4,6 @@ const TOKEN = process.env.BOT_TOKEN;
 const CHANNEL_ID = process.env.CHANNEL_ID;
 
 async function sendSignal() {
-  // Daftar aset yang lu minta (Market yang lagi rame)
   const assets = [
     'ASIA COMPOSITE INDEX', 
     'BITCOIN OTC', 
@@ -14,7 +13,6 @@ async function sendSignal() {
   
   const directions = ['🟢 BUY / CALL', '🔴 SELL / PUT'];
   
-  // Ambil aset secara acak dari list di atas
   const randomAsset = assets[Math.floor(Math.random() * assets.length)];
   const randomDir = directions[Math.floor(Math.random() * directions.length)];
 
@@ -24,6 +22,8 @@ async function sendSignal() {
     "ASSET    : `" + randomAsset + "`\n" +
     "ORDER    : *" + randomDir + "*\n" +
     "DURATION : `1 MINUTE`\n" +
+    "━━━━━━━━━━━━━━━━━━\n" +
+    "🤖 *BELI BOT TRADING DI:* @gerontrader\n" +
     "━━━━━━━━━━━━━━━━━━\n" +
     "⚠️ *AUTO-SIGNAL BY GERON AI*";
 
